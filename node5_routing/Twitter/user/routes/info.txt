@@ -1,0 +1,15 @@
+User Module
+
+1. Create a User - Post - /auth/register
+2. Update User - Put
+3. Delete User - Delete
+4. Report User - Post
+5. Follow User - Post
+6. Unfollow User - Put
+7. Login a User - Post - auth/login
+8. Logout a User - Post
+9. Get user details - Get
+10. Search a User - Post
+11. Get list of followers - Get
+12. Add blue tick  - Post
+13. Block a User. - Post
