@@ -1,40 +1,61 @@
+
 const db = require("../../config/mongodb");
-const {ObjectId} = require("mongodb");
+const { ObjectId } = require("mongodb");
 
-
-exports.add = (model, callBackFunction)=>{
-
-    //1. assess the collection
-    const collection = db.getCollection("user");
-
-    collection.insertOne({name: model.name, email: model.email, password: model.password, gender: model.gender}).
-        then(()=>{
-            callBackFunction();
-        },
-        err=>{throw new Error(err)}
-        )
+const getUserCollection = ()=> {
+    return db.getCollection("user");
 }
 
-exports.update = (model, callBackFunction) => {
-    const collection = db.getCollection("user");
+// model - user data
+// cb - callback to invoke after data is added
+exports.add = (model, cb)=>{
+    // Step 1: Access collection.
+    getUserCollection().insertOne({name: model.name, email: model.email, password: model.password, gender: model.gender})
+        .then(()=>{
+            cb();
+        },
+        err=>{throw new Error(err);})
+}
 
+exports.update = (model, cb)=>{
+
+    // Step 2: Define how to find the document
     const filter = {_id: ObjectId(model._id)};
 
-    const update = {$set: {name: model.name, password: model.password, gender: model.gender}};
+    // Step 3: Define what properties need to be updated
+    // set operator updates individual properties of document.
+    const update = { $set: {name: model.name, password: model.password, 
+        gender: model.gender} };
 
-    collection.findOneAndUpdate(filter, update).then(()=>{
-        callBackFunction();
-    },
-    (err)=> {throw new Error(err)})
+        getUserCollection().findOneAndUpdate(filter, update)
+        .then(()=>{
+            cb()
+        },
+        err=>{console.log(err)})
 }
 
-exports.getById = (id, callBackFunction)=>{
-    const collection = db.getCollection("user");
-    collection.findOne({_id: ObjectId(id)}).then(
-        (user)=>{
-            callBackFunction(user);
-        },
-        (err)=>{
-            console.error(err);
-        })
+exports.getByID = (id, cb)=>{
+    // Step 1: Find data
+    getUserCollection().findOne({_id: ObjectId(id)})
+        .then(
+            (user)=> cb(user),
+            err=>{console.log(err)});
+}
+
+exports.delete = (id, cb)=>{
+    // Step 1: Find data
+    getUserCollection().deleteOne({_id: ObjectId(id)})
+        .then(
+            ()=> cb(),
+            err=>{console.log(err)});
+}
+
+exports.getByEmail = (email, cb)=>{
+    getUserCollection().findOne({email})
+        .then(
+            (record)=>{
+                cb(record);
+            },
+            err=> {console.log(err)}
+        )
 }

@@ -16,3 +16,10 @@ exports.getById = (req,res) => {
         res.status(200).send(user);
     })
 }
+
+exports.deleteById = (req,res)=>{
+    const id = req.params.id;
+    userRepository.deleteById(id,()=>{
+        res.status(200).send("User deleted");
+    })
+}

@@ -1,0 +1,40 @@
+
+
+For User api.
+
+1. Create User Model - done
+2. Create mongodb db - done
+3. Connect to mongodb - done
+4. Create repository to add user to db - 
+5. Call repository from controller.
+
+
+
+
+19-Feb
+
+1. Middleware in NodeJS.
+2. Write a custom middleware.
+3. Implement Authentication.
+4. Make "Create Tweet" api secure.
+    - Only logged in user can tweet.
+5. Authentication & Authorization.
+6. Login API.
+
+How it is work?
+- First, user will login.
+- On login ,user will receive a token
+- Tweet using the token.
+- Without token, unauthorized.
+
+- Token Based Authentication.
+
+Authentication
+    Get an ID(Access Cards).
+    Can't get into company.
+
+Authorization.
+    Related to responsibilities.
+    Developer-> Not authorized to process salary.
+    HR-> nopt authorized to access clien't sprod env.
+    Manager-> Authorized to approve holidays.
